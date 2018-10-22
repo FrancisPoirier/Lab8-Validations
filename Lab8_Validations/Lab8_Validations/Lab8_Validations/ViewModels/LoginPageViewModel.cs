@@ -11,7 +11,8 @@ namespace Lab8_Validations.ViewModels
     public class LoginPageViewModel : ViewModelBase
     {
         private ValidatableObject<string> _userName;
-
+        private ValidatableObject<string> _password;
+        
         public ValidatableObject<string> UserName
         {
             get => _userName;
@@ -21,14 +22,24 @@ namespace Lab8_Validations.ViewModels
                 RaisePropertyChanged();
             }
         }
-        public DelegateCommand ConnectCommand => new DelegateCommand(ValidateConnexionCriterias);
 
-        
+        public ValidatableObject<string> Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public DelegateCommand ConnectCommand => new DelegateCommand(ValidateConnexionCriterias);        
 
         public LoginPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             _userName = new ValidatableObject<string>();
+            _password = new ValidatableObject<string>();
             AddValidations();
         }
 
