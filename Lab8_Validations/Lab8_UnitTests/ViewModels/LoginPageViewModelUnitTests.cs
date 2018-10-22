@@ -57,6 +57,41 @@ namespace Lab8_UnitTests.ViewModels
         }
 
         [Fact]
+        public void ValidateConnexionCommand_WithInvalidPassword_ShouldInvalidatePasswordValidatableObject()
+        {
+            const string INVALID_PASSWORD = "invalid";
+            _viewModel.Password.Value = INVALID_PASSWORD;
+
+            _viewModel.ConnectCommand.Execute();
+
+            Assert.False(_viewModel.Password.IsValid);
+        }
+
+        [Fact]
+        public void ValidateConnexionCommand_WithInvalidPasswordThatHasOneError_ShouldAddAnErrorToThePasswordValidatableObject()
+        {
+            const string INVALID_PASSWORD = "Ab1";
+            _viewModel.Password.Value = INVALID_PASSWORD;
+
+            _viewModel.ConnectCommand.Execute();
+
+            var firstPasswordError = _viewModel.Password.Errors.ElementAt(0);
+            Assert.Equal(UiText.TooShortPassword, firstPasswordError);
+        }
+
+        [Fact]
+        public void ValidateConnexionCommand_WithInvalidPasswordThatHasMultipleErrors_ShouldAddErrorsToThePasswordValidatableObject()
+        {
+            const string INVALID_PASSWORD = "Ab";
+            _viewModel.Password.Value = INVALID_PASSWORD;
+
+            _viewModel.ConnectCommand.Execute();
+
+            var expectedNumberOfErrors = 2;
+            Assert.Equal(expectedNumberOfErrors, _viewModel.Password.Errors.Count);
+        }
+
+        [Fact]
         public void UserName_WhenValueChanges_ShouldRaisedPropertyChanged()
         {
             _viewModel.PropertyChanged += RaisedPropertyChange;
@@ -67,14 +102,13 @@ namespace Lab8_UnitTests.ViewModels
         }
 
         [Fact]
-        public void ValidateConnexionCommand_WithInvalidPassword_ShouldInvalidatePasswordValidatableObject()
+        public void Password_WhenValueChanges_ShouldRaisedPropertyChanged()
         {
-            const string INVALID_PASSWORD = "invalid";
-            _viewModel.Password.Value = INVALID_PASSWORD;
+            _viewModel.PropertyChanged += RaisedPropertyChange;
 
-            _viewModel.ConnectCommand.Execute();
+            _viewModel.Password = new ValidatableObject<string>();
 
-            Assert.False(_viewModel.Password.IsValid);
+            Assert.True(_eventRaised);
         }
 
         private void RaisedPropertyChange(object sender, EventArgs e)

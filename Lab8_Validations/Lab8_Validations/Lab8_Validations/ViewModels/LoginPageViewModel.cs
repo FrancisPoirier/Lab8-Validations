@@ -60,12 +60,35 @@ namespace Lab8_Validations.ViewModels
 
         private void AddPasswordValidations()
         {
+            var hasTenOrMoreChars = new HasTenCharactersOrMore<string>()
+            {
+                ValidationMessage = UiText.TooShortPassword
+            };
+            _password.AddValidationRule(hasTenOrMoreChars);
 
+            var hasLowerCase = new HasLowerCase<string>()
+            {
+                ValidationMessage = UiText.NoLowerCasePassword
+            };
+            _password.AddValidationRule(hasLowerCase);
+
+            var hasUpperCase = new HasUpperCase<string>()
+            {
+                ValidationMessage = UiText.NoUpperCasePassword
+            };
+            _password.AddValidationRule(hasUpperCase);
+
+            var hasNumber = new HasNumber<string>()
+            {
+                ValidationMessage = UiText.NoNumberPassword
+            };
+            _password.AddValidationRule(hasNumber);
         }
 
         private void ValidateConnexionCriterias()
         {
-            _userName.Validate();    
+            _userName.Validate();
+            _password.Validate();
         }
 
         
