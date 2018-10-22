@@ -33,7 +33,8 @@ namespace Lab8_Validations.ViewModels
             }
         }
 
-        public DelegateCommand ConnectCommand => new DelegateCommand(ValidateConnexionCriterias);        
+        public DelegateCommand ValidateUserNameCommand => new DelegateCommand(ValidateUserName);
+        public DelegateCommand ValidatePasswordCommand => new DelegateCommand(ValidatePassword);
 
         public LoginPageViewModel(INavigationService navigationService)
             : base(navigationService)
@@ -85,12 +86,14 @@ namespace Lab8_Validations.ViewModels
             _password.AddValidationRule(hasNumber);
         }
 
-        private void ValidateConnexionCriterias()
+        private void ValidateUserName()
         {
             _userName.Validate();
-            _password.Validate();
         }
 
-        
+        private void ValidatePassword()
+        {
+            _password.Validate();
+        }
     }
 }

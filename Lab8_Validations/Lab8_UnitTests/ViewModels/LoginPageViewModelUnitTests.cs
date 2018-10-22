@@ -23,69 +23,69 @@ namespace Lab8_UnitTests.ViewModels
         }
 
         [Fact]
-        public void ValidateConnexionCommand_WithInvalidUserName_ShouldInvalidateUserNameValidatableObject()
+        public void ValidateUserNameCommand_WithInvalidUserName_ShouldInvalidateUserNameValidatableObject()
         {
             const string INVALID_USERNAME = "invalid";
             _viewModel.UserName.Value = INVALID_USERNAME;
 
-            _viewModel.ConnectCommand.Execute();
+            _viewModel.ValidateUserNameCommand.Execute();
 
             Assert.False(_viewModel.UserName.IsValid);
         }
 
         [Fact]
-        public void ValidateConnexionCommand_WithInvalidUserName_ShouldAddErrorsToTheUserNameValidatableObject()
+        public void ValidateUserNameCommand_WithInvalidUserName_ShouldAddErrorsToTheUserNameValidatableObject()
         {
             const string INVALID_USERNAME = "invalid";
             _viewModel.UserName.Value = INVALID_USERNAME;
 
-            _viewModel.ConnectCommand.Execute();
+            _viewModel.ValidateUserNameCommand.Execute();
 
             var firstUserNameError = _viewModel.UserName.Errors.ElementAt(0);
             Assert.Equal(UiText.EmailInvalid, firstUserNameError);
         }
 
         [Fact]
-        public void ValidateConnexionCommand_WithValidUserName_ShouldValidateUserNameValidatableObject()
+        public void ValidateUserNameCommand_WithValidUserName_ShouldValidateUserNameValidatableObject()
         {
             const string VALID_USERNAME = "validUsername@valid.com";
             _viewModel.UserName.Value = VALID_USERNAME;
 
-            _viewModel.ConnectCommand.Execute();
+            _viewModel.ValidateUserNameCommand.Execute();
 
             Assert.True(_viewModel.UserName.IsValid);
         }
 
         [Fact]
-        public void ValidateConnexionCommand_WithInvalidPassword_ShouldInvalidatePasswordValidatableObject()
+        public void ValidatePasswordCommand_WithInvalidPassword_ShouldInvalidatePasswordValidatableObject()
         {
             const string INVALID_PASSWORD = "invalid";
             _viewModel.Password.Value = INVALID_PASSWORD;
 
-            _viewModel.ConnectCommand.Execute();
+            _viewModel.ValidatePasswordCommand.Execute();
 
             Assert.False(_viewModel.Password.IsValid);
         }
 
         [Fact]
-        public void ValidateConnexionCommand_WithInvalidPasswordThatHasOneError_ShouldAddAnErrorToThePasswordValidatableObject()
+        public void ValidatePasswordCommand_WithInvalidPasswordThatHasOneError_ShouldAddAnErrorToThePasswordValidatableObject()
         {
             const string INVALID_PASSWORD = "Ab1";
             _viewModel.Password.Value = INVALID_PASSWORD;
 
-            _viewModel.ConnectCommand.Execute();
+            _viewModel.ValidatePasswordCommand.Execute();
 
             var firstPasswordError = _viewModel.Password.Errors.ElementAt(0);
             Assert.Equal(UiText.TooShortPassword, firstPasswordError);
         }
 
         [Fact]
-        public void ValidateConnexionCommand_WithInvalidPasswordThatHasMultipleErrors_ShouldAddErrorsToThePasswordValidatableObject()
+        public void ValidatePasswordCommand_WithInvalidPasswordThatHasMultipleErrors_ShouldAddErrorsToThePasswordValidatableObject()
         {
             const string INVALID_PASSWORD = "Ab";
             _viewModel.Password.Value = INVALID_PASSWORD;
 
-            _viewModel.ConnectCommand.Execute();
+            _viewModel.ValidatePasswordCommand.Execute();
 
             var expectedNumberOfErrors = 2;
             Assert.Equal(expectedNumberOfErrors, _viewModel.Password.Errors.Count);
