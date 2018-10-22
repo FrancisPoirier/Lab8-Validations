@@ -46,7 +46,7 @@ namespace Lab8_Validations.ViewModels
         private void AddValidations()
         {
             AddUserNameValidations();
-            
+            AddPasswordValidations();
         }
 
         private void AddUserNameValidations()
@@ -56,6 +56,11 @@ namespace Lab8_Validations.ViewModels
                 ValidationMessage = UiText.EmailInvalid
             };
             _userName.AddValidationRule(isEmailValid);
+        }
+
+        private void AddPasswordValidations()
+        {
+
         }
 
         private void ValidateConnexionCriterias()
