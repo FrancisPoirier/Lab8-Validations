@@ -6,27 +6,52 @@
              x:Class="Lab8_Validations.Views.LoginPageView"
              Title="{Binding Title}">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Username:" />
+    <StackLayout HorizontalOptions="FillAndExpand" 
+                 VerticalOptions="CenterAndExpand"
+                 Padding="15">
+        <Label Text="Username:" HorizontalOptions="Start"/>
+        
         <Entry Text="{Binding UserName.Value}">
             <Entry.Behaviors>
                 <behaviors:EventToCommandBehavior
                     EventName="Unfocused"
                     Command="{Binding ValidateUserNameCommand}" />
             </Entry.Behaviors>
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry"
+                             Binding="{Binding Source={x:Reference UserNameErrors}, Path=Text.Length,
+                                                Converter={converters:IsValueGreaterThanZeroConverter}}"
+                             Value="true">
+                    <Setter Property="BackgroundColor" Value="Red" />
+                </DataTrigger>
+            </Entry.Triggers>
         </Entry>
+        
         <Label Text="{Binding UserName.Errors, Converter={converters:FirstValidationErrorToTextConverter}}"
+               x:Name="UserNameErrors"
                TextColor="LightSalmon"
                Margin="0,0,0,4"/>
-        <Label Text="Password:" />
+        
+        <Label Text="Password:" HorizontalOptions="Start" />
+        
         <Entry Text="{Binding Password.Value}">
             <Entry.Behaviors>
                 <behaviors:EventToCommandBehavior
                     EventName="Unfocused"
                     Command="{Binding ValidatePasswordCommand}" />
             </Entry.Behaviors>
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry"
+                             Binding="{Binding Source={x:Reference PasswordErrors}, Path=Text.Length, 
+                                                Converter={converters:IsValueGreaterThanZeroConverter}}"
+                             Value="true">
+                    <Setter Property="BackgroundColor" Value="Red" />
+                </DataTrigger>
+            </Entry.Triggers>
         </Entry>
+        
         <Label Text="{Binding Password.Errors, Converter={converters:FirstValidationErrorToTextConverter}}"
+               x:Name="PasswordErrors"
                TextColor="LightSalmon" />
 
         <Button Text="Connexion"
