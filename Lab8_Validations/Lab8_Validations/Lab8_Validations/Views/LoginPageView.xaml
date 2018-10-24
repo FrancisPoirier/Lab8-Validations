@@ -55,6 +55,6 @@
                TextColor="LightSalmon" />
 
         <Button Text="Connexion"
-                />
+                Command="{Binding NavigateToHomePageCommand}"/>
     </StackLayout>
 </ContentPage>

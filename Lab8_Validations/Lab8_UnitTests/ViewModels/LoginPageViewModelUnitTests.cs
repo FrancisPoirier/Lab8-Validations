@@ -92,6 +92,34 @@ namespace Lab8_UnitTests.ViewModels
         }
 
         [Fact]
+        public void CanNavigateToHomePage_WithValidPasswordAndUsername_shouldReturnTrue()
+        {
+            const string VALID_USERNAME = "validUser@hotmail.com";
+            const string VALID_PASSWORD = "Abcdefghijkl134";
+            _viewModel.UserName.Value = VALID_USERNAME;
+            _viewModel.Password.Value = VALID_PASSWORD;
+
+            bool actualAnswer = _viewModel.NavigateToHomePageCommand.CanExecute();
+
+            const bool EXPECTED_ANSWER = true;
+            Assert.Equal(EXPECTED_ANSWER, actualAnswer);
+        }
+
+        [Fact]
+        public void CanNavigateToHomePage_WithInvalidPasswordOrUsername_shouldReturnFalse()
+        {
+            const string INVALID_USERNAME = "invalidUser";
+            const string INVALID_PASSWORD = "abc";
+            _viewModel.UserName.Value = INVALID_USERNAME;
+            _viewModel.Password.Value = INVALID_PASSWORD;
+
+            bool actualAnswer = _viewModel.NavigateToHomePageCommand.CanExecute();
+
+            const bool EXPECTED_ANSWER = false;
+            Assert.Equal(EXPECTED_ANSWER, actualAnswer);
+        }
+
+        [Fact]
         public void UserName_WhenValueChanges_ShouldRaisedPropertyChanged()
         {
             _viewModel.PropertyChanged += RaisedPropertyChange;

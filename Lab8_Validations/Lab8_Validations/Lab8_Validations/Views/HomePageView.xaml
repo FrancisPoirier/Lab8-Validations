@@ -4,5 +4,8 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Lab8_Validations.Views.HomePageView">
-  
+
+    <ContentPage.Content>
+        <Label Text="Welcome to HomePage." />
+    </ContentPage.Content>
 </ContentPage>

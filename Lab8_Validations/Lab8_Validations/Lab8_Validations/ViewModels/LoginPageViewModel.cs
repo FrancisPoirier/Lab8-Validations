@@ -5,6 +5,7 @@ using System;
 using Lab8_Validations.Validations;
 using Lab8_Validations.Validations.Rules;
 using Lab8_Validations.Externalization;
+using Lab8_Validations.Views;
 
 namespace Lab8_Validations.ViewModels
 {
@@ -12,7 +13,8 @@ namespace Lab8_Validations.ViewModels
     {
         private ValidatableObject<string> _userName;
         private ValidatableObject<string> _password;
-        
+        private INavigationService _navigationService;
+
         public ValidatableObject<string> UserName
         {
             get => _userName;
@@ -35,12 +37,14 @@ namespace Lab8_Validations.ViewModels
 
         public DelegateCommand ValidateUserNameCommand => new DelegateCommand(ValidateUserName);
         public DelegateCommand ValidatePasswordCommand => new DelegateCommand(ValidatePassword);
+        public DelegateCommand NavigateToHomePageCommand => new DelegateCommand(NavigateToHomePage, CanNavigateToHomePage);
 
         public LoginPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             _userName = new ValidatableObject<string>();
             _password = new ValidatableObject<string>();
+            _navigationService = navigationService;
             AddValidations();
         }
 
@@ -94,6 +98,16 @@ namespace Lab8_Validations.ViewModels
         private void ValidatePassword()
         {
             _password.Validate();
+        }
+
+        private void NavigateToHomePage()
+        {
+            _navigationService.NavigateAsync(nameof(HomePageView));
+        }
+
+        private bool CanNavigateToHomePage()
+        {
+            return _userName.IsValid && _password.IsValid ? true : false;
         }
     }
 }
