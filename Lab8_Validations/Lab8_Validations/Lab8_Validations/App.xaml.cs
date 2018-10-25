@@ -23,13 +23,13 @@ namespace Lab8_Validations
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync(nameof(LoginPageView));
+            await NavigationService.NavigateAsync(nameof(RegisterPageView));
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<LoginPageView, LoginPageViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterPageView, RegisterPageViewModel>();
             containerRegistry.RegisterForNavigation<HomePageView, HomePageViewModel>();
         }
     }

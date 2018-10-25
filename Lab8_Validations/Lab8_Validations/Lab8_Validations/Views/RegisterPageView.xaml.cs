@@ -7,9 +7,9 @@ using Xamarin.Forms;
 
 namespace Lab8_Validations.Views
 {
-    public partial class LoginPageView : ContentPage
+    public partial class RegisterPageView : ContentPage
     {
-        public LoginPageView()
+        public RegisterPageView()
         {
             InitializeComponent();
         }

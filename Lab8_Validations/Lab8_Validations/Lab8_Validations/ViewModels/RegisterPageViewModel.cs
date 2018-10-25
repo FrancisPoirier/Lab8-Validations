@@ -9,7 +9,7 @@ using Lab8_Validations.Views;
 
 namespace Lab8_Validations.ViewModels
 {
-    public class LoginPageViewModel : ViewModelBase
+    public class RegisterPageViewModel : ViewModelBase
     {
         private ValidatableObject<string> _userName;
         private ValidatableObject<string> _password;
@@ -37,9 +37,9 @@ namespace Lab8_Validations.ViewModels
 
         public DelegateCommand ValidateUserNameCommand => new DelegateCommand(ValidateUserName);
         public DelegateCommand ValidatePasswordCommand => new DelegateCommand(ValidatePassword);
-        public DelegateCommand NavigateToHomePageCommand => new DelegateCommand(NavigateToHomePage, CanNavigateToHomePage);
+        public DelegateCommand NavigateToHomePageCommand => new DelegateCommand(NavigateToHomePage);
 
-        public LoginPageViewModel(INavigationService navigationService)
+        public RegisterPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             _userName = new ValidatableObject<string>();
@@ -105,28 +105,29 @@ namespace Lab8_Validations.ViewModels
         private void ValidateUserName()
         {
             _userName.Validate();
-            RefreshCanExecutes();
+            //RefreshCanExecutes();
         }
 
         private void ValidatePassword()
         {
             _password.Validate();
-            RefreshCanExecutes();
+            //RefreshCanExecutes();
         }
 
         private void NavigateToHomePage()
         {
-            _navigationService.NavigateAsync(nameof(HomePageView));
+            if (_userName.IsValid && _password.IsValid)
+                _navigationService.NavigateAsync(nameof(HomePageView));
         }
 
-        private bool CanNavigateToHomePage()
-        {           
-            return _userName.IsValid && _password.IsValid ? true : false;
-        }
+        //private bool CanExecuteNavigateToHomePage()
+        //{
+        //    return _userName.IsValid && _password.IsValid ? true : false;
+        //}
 
-        private void RefreshCanExecutes()
-        {
-            NavigateToHomePageCommand.CanExecute();
-        }
+        //private void RefreshCanExecutes()
+        //{
+        //    NavigateToHomePageCommand.CanExecute();
+        //}
     }
 }
