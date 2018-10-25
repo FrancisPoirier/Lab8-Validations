@@ -56,6 +56,12 @@ namespace Lab8_Validations.ViewModels
 
         private void AddUserNameValidations()
         {
+            var usernameRequired = new IsNotNullOrEmpty<string>()
+            {
+                ValidationMessage = UiText.UsernameRequired
+            };
+            _userName.AddValidationRule(usernameRequired);
+
             var isEmailValid = new IsEmailValid<string>()
             {
                 ValidationMessage = UiText.EmailInvalid
@@ -65,6 +71,12 @@ namespace Lab8_Validations.ViewModels
 
         private void AddPasswordValidations()
         {
+            var passwordRequired = new IsNotNullOrEmpty<string>()
+            {
+                ValidationMessage = UiText.PasswordRequired
+            };
+            _password.AddValidationRule(passwordRequired);
+
             var hasTenOrMoreChars = new HasTenCharactersOrMore<string>()
             {
                 ValidationMessage = UiText.TooShortPassword
@@ -93,11 +105,13 @@ namespace Lab8_Validations.ViewModels
         private void ValidateUserName()
         {
             _userName.Validate();
+            RefreshCanExecutes();
         }
 
         private void ValidatePassword()
         {
             _password.Validate();
+            RefreshCanExecutes();
         }
 
         private void NavigateToHomePage()
@@ -106,8 +120,13 @@ namespace Lab8_Validations.ViewModels
         }
 
         private bool CanNavigateToHomePage()
-        {
+        {           
             return _userName.IsValid && _password.IsValid ? true : false;
+        }
+
+        private void RefreshCanExecutes()
+        {
+            NavigateToHomePageCommand.CanExecute();
         }
     }
 }

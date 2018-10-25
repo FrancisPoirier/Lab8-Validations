@@ -46,7 +46,7 @@ namespace Lab8_Validations.Validations
 
         public ValidatableObject()
         {
-            _isValid = true;
+            _isValid = false;
             _errors = new List<string>();
             _validationRules = new List<IValidationRule<T>>();
         }
